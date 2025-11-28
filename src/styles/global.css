@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  a { @apply text-inherit no-underline; }
+  body { 
+      @apply bg-[#050505] text-slate-300; 
+      cursor: none; /* Esconde cursor padrão para usar o nosso */
+  }
+}
+
+/* Cursor Customizado */
+#custom-cursor {
+    @apply fixed top-0 left-0 w-3 h-3 bg-purple-500 rounded-full pointer-events-none z-50 mix-blend-difference;
+    transform: translate(-50%, -50%);
+}
+#custom-cursor-blur {
+    @apply fixed top-0 left-0 w-8 h-8 bg-purple-600/30 blur-md rounded-full pointer-events-none z-40 transition-transform duration-100 ease-out;
+    transform: translate(-50%, -50%);
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Utilitários */
+.glass-panel {
+    @apply bg-[#0a0a0c]/80 backdrop-blur-md border border-white/10;
+}
 @layer base {
   /* Reseta os links azuis feios */
   a {
