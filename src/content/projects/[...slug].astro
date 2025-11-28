@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Esta função diz ao Astro quais páginas ele deve gerar (Build time)
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title}>
+  <div class="max-w-2xl mx-auto mt-8">
+    <a href="/" class="text-sm text-slate-500 hover:text-slate-800 mb-8 block font-mono">← Voltar para Home</a>
+    
+    <header class="mb-10">
+      <h1 class="text-4xl font-serif font-semibold text-slate-900 mb-4">{entry.data.title}</h1>
+      <div class="flex gap-4 text-sm text-slate-500 font-mono mb-6">
+        <time>{entry.data.pubDate.toLocaleDateString('pt-BR')}</time>
+        <span>•</span>
+        <span>{entry.data.tags.join(', ')}</span>
+      </div>
+      
+      {entry.data.link && (
+        <a href={entry.data.link} target="_blank" class="inline-block border border-slate-300 px-4 py-2 text-sm hover:bg-slate-900 hover:text-white transition-colors">
+          Ver no GitHub
+        </a>
+      )}
+    </header>
+
+    <article class="prose prose-slate prose-lg prose-headings:font-serif prose-a:text-blue-600 hover:prose-a:text-blue-800">
+      <Content />
+    </article>
+  </div>
+</BaseLayout>

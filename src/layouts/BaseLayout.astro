@@ -1,0 +1,31 @@
+---
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/600.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '../styles/global.css';
+
+const { title } = Astro.props;
+---
+
+<html lang="pt-br" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[#050505] min-h-screen relative overflow-x-hidden text-slate-300 font-sans">
+    
+    <!-- Grid Tecnológico de Fundo -->
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-20">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Conteúdo Centralizado -->
+    <div class="max-w-4xl mx-auto px-6 py-12 relative z-10">
+      <slot />
+    </div>
+
+  </body>
+</html>
