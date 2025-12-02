@@ -10,25 +10,53 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
-    
-    <!-- FIX: Removido o 'defer' para garantir carregamento imediato -->
+    <!-- Chart.js via CDN para evitar peso no build -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body class="bg-[#050505] overflow-x-hidden selection:bg-purple-500 selection:text-white">
+  <body class="bg-[#02040a] overflow-x-hidden selection:bg-purple-500 selection:text-white">
     
-    <!-- CURSOR PERSONALIZADO -->
+    <!-- PRELOADER (PORTAL ESPACIAL) -->
+    <div id="preloader" class="transition-opacity duration-1000">
+      <div class="portal-loader"></div>
+      <div class="loader-text">ABRINDO PORTAL...</div>
+    </div>
+
+    <!-- CURSOR -->
     <div id="custom-cursor" class="hidden md:block"></div>
     <div id="custom-cursor-blur" class="hidden md:block"></div>
 
-    <!-- FUNDO DE PARTÍCULAS (CANVAS) -->
-    <canvas id="particles-canvas" class="fixed inset-0 z-[-1] pointer-events-none opacity-40"></canvas>
+    <!-- FUNDO PARALLAX LIMPO -->
+    <div class="space-bg"></div>
+    <div class="planet-glow planet-1"></div>
+    <div class="planet-glow planet-2"></div>
 
-    <!-- CONTEÚDO -->
-    <div class="max-w-5xl mx-auto px-6 py-12 relative z-10">
+    <!-- MENU HAMBÚRGUER (FIXO) -->
+    <div id="menu-toggle" class="menu-btn">
+      <div class="menu-line line-1"></div>
+      <div class="menu-line line-2"></div>
+      <div class="menu-line line-3"></div>
+    </div>
+
+    <!-- SIDEBAR OVERLAY & MENU -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <nav id="sidebar" class="sidebar-menu flex flex-col justify-center px-12">
+      <a href="#" class="sidebar-link">Início</a>
+      <a href="#skills" class="sidebar-link">Arsenal</a>
+      <a href="#experiencia" class="sidebar-link">Missões</a>
+      <a href="#certificacoes" class="sidebar-link">Credenciais</a>
+      
+      <div class="mt-12 pt-8 border-t border-white/10">
+        <p class="text-xs text-slate-500 font-mono mb-4">COMUNICAÇÃO</p>
+        <a href="https://wa.me/5591981646532" target="_blank" class="block text-sm text-purple-400 hover:text-white mb-2">WhatsApp ↗</a>
+        <a href="mailto:byronkingdev@gmail.com" class="block text-sm text-purple-400 hover:text-white">Email ↗</a>
+      </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="max-w-5xl mx-auto px-6 py-12 relative z-10 transition-transform duration-500" id="main-content">
       <slot />
     </div>
 
-    <!-- Script Principal -->
     <script src="../scripts/main.js"></script>
   </body>
 </html>

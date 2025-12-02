@@ -5,211 +5,188 @@ import { getCollection } from 'astro:content';
 const allProjects = await getCollection('projects');
 const sortedProjects = allProjects.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const skills = ["Python", "SQL", "Machine Learning", "Pandas/NumPy", "Power BI", "Git", "Automação"];
-const certifications = [
-  "Google Analytics (Google)",
-  "Introdução a IA (Google)",
-  "Modelagem de Dados",
-  "Recode Pro AI"
-];
+const techStack = ["Python", "TensorFlow", "RAG", "Oracle Cloud", "Docker", "NLP", "Gemini API", "React"];
 ---
 
-<BaseLayout title="Luiz Henrique | Cientista de Dados">
+<BaseLayout title="Henrique Barbosa | AI Engineer">
   
   <!-- HERO SECTION -->
-  <header class="min-h-[80vh] flex flex-col justify-center reveal">
-    <div class="inline-flex items-center gap-2 px-3 py-1 w-fit rounded-full bg-purple-900/30 border border-purple-500/30 text-purple-300 text-xs font-mono mb-6">
-      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-      DISPONÍVEL PARA CONTRATAÇÃO
+  <header class="min-h-screen flex flex-col justify-center relative reveal">
+    
+    <!-- Status -->
+    <div class="inline-flex items-center gap-2 px-3 py-1 w-fit rounded-full bg-white/5 border border-white/10 text-purple-300 text-xs font-mono mb-8 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_10px_#4ade80]"></span>
+      <span data-i18n="open">DISPONÍVEL PARA PROJETOS</span>
     </div>
 
-    <h1 class="text-6xl sm:text-8xl font-serif font-bold mb-6 text-white tracking-tighter">
-      Luiz Henrique<span class="text-purple-500">.</span>
+    <!-- Nome e Título -->
+    <h1 class="text-6xl md:text-8xl font-serif font-bold mb-6 text-white tracking-tighter drop-shadow-2xl">
+      Henrique Barbosa<span class="text-purple-500">.</span>
     </h1>
+    <h2 class="text-xl md:text-2xl font-mono text-purple-400 mb-8" data-i18n="role">
+      Cientista de Dados & Eng. de IA
+    </h2>
 
-    <div class="text-xl sm:text-2xl font-sans text-slate-400 max-w-2xl leading-relaxed border-l-4 border-purple-600 pl-6 mb-10">
-      <p>
-        Cientista de Dados Júnior focado em resolver problemas de negócio. 
-        Histórico comprovado de <span class="text-white font-bold bg-purple-600/20 px-1">redução de 62%</span> no tempo de processos via automação.
+    <!-- Texto de Impacto -->
+    <div class="text-lg md:text-xl font-sans text-slate-400 max-w-2xl leading-relaxed border-l-2 border-purple-500/50 pl-6 mb-12">
+      <p data-i18n="heroText">
+        Arquitetando a <span class="text-white font-bold bg-purple-600/20 px-1">inteligência autônoma</span> que redefine limites.
+      </p>
+      <p class="mt-4 text-sm text-slate-500" data-i18n="heroSub">
+        Transformo o caos de dados corporativos em previsibilidade algorítmica e agentes que pensam.
       </p>
     </div>
 
-    <div class="flex gap-4">
-      <a href="#contato" class="px-6 py-3 bg-white text-black font-bold rounded hover:bg-slate-200 transition-colors">
-        Entrar em Contato
+    <!-- Botões de Contato -->
+    <div class="flex flex-wrap gap-4">
+      <a href="https://wa.me/5591981646532" target="_blank" class="px-8 py-4 bg-white text-black font-bold rounded hover:bg-purple-100 transition-colors flex items-center gap-2 group shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+        <span data-i18n="btnContact">Iniciar Transmissão</span>
+        <span class="group-hover:translate-x-1 transition-transform">→</span>
       </a>
-      <a href="https://github.com/DevByronKing" target="_blank" class="px-6 py-3 border border-white/20 text-white rounded hover:bg-white/10 transition-colors">
-        GitHub
+      <a href="mailto:byronkingdev@gmail.com" class="px-8 py-4 border border-white/10 text-white rounded hover:bg-white/5 transition-colors font-mono">
+        Email Uplink
       </a>
     </div>
   </header>
 
-  <!-- MINI DATA VIZ (GRÁFICO DE SKILLS) -->
-  <section class="mb-32 reveal">
+  <!-- QUASAR DIVIDER -->
+  <div class="quasar-line"></div>
+
+  <!-- SKILLS & CHART -->
+  <section id="skills" class="mb-32 reveal">
     <div class="grid md:grid-cols-2 gap-16 items-center">
       <div>
-        <h2 class="text-3xl font-serif text-white mb-6">Core Skills</h2>
-        <p class="text-slate-400 mb-6 leading-relaxed">
-          Combinação de rigor analítico com desenvolvimento prático. Minha stack foca em extrair valor dos dados e comunicar insights visualmente.
-        </p>
-        <div class="flex flex-wrap gap-2">
-          {skills.map(s => (
-            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded text-sm text-purple-200">{s}</span>
+        <h2 class="text-sm font-bold font-mono text-purple-500 uppercase mb-8 tracking-widest" data-i18n="skillsTitle">
+          Arsenal Tecnológico
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          {techStack.map(tech => (
+            <span class="px-4 py-2 bg-[#1a103c]/30 border border-purple-500/20 rounded text-sm text-slate-300 hover:border-purple-500 hover:text-white transition-colors cursor-default backdrop-blur-sm">
+              {tech}
+            </span>
           ))}
         </div>
       </div>
-      
-      <!-- O CANVAS DO GRÁFICO (Chart.js vai renderizar aqui) -->
-      <div class="glass-panel p-6 rounded-2xl relative">
+      <div class="glass-panel p-6 rounded-2xl">
         <canvas id="skillsChart"></canvas>
       </div>
     </div>
   </section>
 
-  <!-- EXPERIÊNCIA (Do CV) -->
-  <section class="mb-32 reveal">
-    <h2 class="text-sm font-bold font-mono text-slate-500 uppercase mb-12 tracking-widest">Experiência Profissional</h2>
+  <!-- EXPERIÊNCIA DETALHADA -->
+  <section id="experiencia" class="mb-32 reveal">
+    <h2 class="text-sm font-bold font-mono text-purple-500 uppercase mb-12 tracking-widest" data-i18n="expTitle">
+      Missões Críticas
+    </h2>
     
-    <div class="space-y-12">
-      <!-- SEDUC -->
-      <article class="relative pl-8 border-l border-white/10">
-        <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-purple-500 rounded-full"></div>
-        <h3 class="text-2xl font-serif text-white">Estagiário em TI</h3>
-        <div class="text-purple-400 font-mono text-sm mb-2">SEDUC - PA | Jul 2025 - Atual</div>
-        <p class="text-slate-400 max-w-2xl">
-          Coordenação de automação de processos técnicos. Utilização de IA para otimizar fluxos internos, resultando na redução drástica de 62% no tempo de resposta de devolutivas. Manutenção de banco de dados e otimização de queries.
+    <div class="space-y-16">
+      <!-- SEDUC (DESTAQUE) -->
+      <article class="relative pl-8 border-l-2 border-purple-500/30">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-[#030014] border-2 border-purple-500 rounded-full shadow-[0_0_15px_#a855f7]"></div>
+        
+        <h3 class="text-3xl font-serif text-white mb-1">SEDUC - PA</h3>
+        <div class="text-purple-400 font-mono text-sm mb-4" data-i18n="seducRole">Líder de Desenvolvimento & Inovação</div>
+        
+        <p class="text-slate-400 mb-6 max-w-3xl leading-relaxed" data-i18n="seducDesc">
+          Responsável pela arquitetura e supervisão de todo o ecossistema de projetos.
         </p>
+
+        <!-- Sub-projetos (Grid de Cards com Efeito 3D) -->
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">CortexIA 🧠</h4>
+            <p class="text-xs text-slate-500" data-i18n="cortexDesc">Agente autônomo analista (Gemini API + RAG + NLP).</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Sitec Web 🌐</h4>
+            <p class="text-xs text-slate-500" data-i18n="sitecDesc">Gestão Full Stack integrando todas as ferramentas.</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Ticker ⏱️</h4>
+            <p class="text-xs text-slate-500" data-i18n="tickerDesc">Ponto eletrônico digital (Antes manual).</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Reader & Hollides 📄</h4>
+            <p class="text-xs text-slate-500" data-i18n="readerDesc">Automação de leitura de relatórios e férias.</p>
+          </div>
+        </div>
       </article>
 
       <!-- SEREDE -->
-      <article class="relative pl-8 border-l border-white/10">
-        <div class="absolute -left-[5px] top-2 w-2.5 h-2.5 bg-slate-700 rounded-full"></div>
-        <h3 class="text-2xl font-serif text-white">Assistente Administrativo (Dados)</h3>
-        <div class="text-purple-400 font-mono text-sm mb-2">Serede Rede Conecta | 2019 - 2022</div>
-        <p class="text-slate-400 max-w-2xl">
-          Responsável pela coleta, inserção e análise de dados de clientes para monitoramento de desempenho de equipe.
+      <article class="relative pl-8 border-l-2 border-slate-700/30">
+        <div class="absolute -left-[7px] top-0 w-3 h-3 bg-slate-700 rounded-full"></div>
+        <h3 class="text-2xl font-serif text-slate-300 mb-1">Serede Rede Conecta</h3>
+        <div class="text-slate-500 font-mono text-sm mb-4" data-i18n="seredeRole">Analista de Dados & Operações</div>
+        <p class="text-slate-500 max-w-3xl" data-i18n="seredeDesc">
+          Coleta e análise de dados operacionais. Monitoramento de KPIs de equipe e gestão de processos seletivos (Gupy/E-social). Otimização de fluxo documental.
         </p>
       </article>
     </div>
   </section>
 
-  <!-- PROJETOS COM HOVER PREVIEW -->
-  <section class="mb-32 reveal">
-    <h2 class="text-sm font-bold font-mono text-slate-500 uppercase mb-12 tracking-widest">Projetos</h2>
-    <div class="flex flex-col gap-8">
-      {sortedProjects.map((project) => (
-        <a href={`/projects/${project.slug}`} class="group relative block p-8 glass-panel rounded-xl hover:bg-white/5 transition-all">
-          <div class="flex flex-col md:flex-row justify-between items-baseline gap-4 relative z-10">
-            <div>
-              <h3 class="text-3xl font-serif text-white group-hover:text-purple-400 transition-colors">
-                {project.data.title}
-              </h3>
-              <p class="text-slate-400 mt-2">{project.data.description}</p>
-            </div>
-            <span class="text-xs font-mono border border-white/20 px-2 py-1 rounded text-slate-300">
-              {project.data.pubDate.getFullYear()}
-            </span>
-          </div>
-          
-          <!-- EFEITO DE TOOLTIP/PREVIEW (Aparece no hover) -->
-          <div class="absolute right-10 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block pointer-events-none">
-            <div class="bg-black border border-purple-500/50 p-4 rounded-lg shadow-[0_0_30px_rgba(124,58,237,0.3)]">
-              <div class="text-xs text-purple-300 font-mono mb-1">TECH STACK</div>
-              <div class="flex gap-2">
-                {project.data.tags.slice(0,3).map(t => (
-                   <span class="bg-purple-900/50 px-2 py-1 rounded text-[10px] text-white">{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </a>
-      ))}
+  <!-- CERTIFICAÇÕES (Destaque Oracle com Tilt 3D) -->
+  <section id="certificacoes" class="mb-32 reveal">
+    <h2 class="text-sm font-bold font-mono text-purple-500 uppercase mb-8 tracking-widest" data-i18n="certTitle">
+      Credenciais de Elite
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Oracle 1 -->
+      <div class="supernova-card p-6 border-l-4 border-l-red-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Oracle Cloud Infrastructure 2025</h3>
+        <p class="text-slate-400 text-sm">Certified Generative AI Professional</p>
+      </div>
+      <!-- Oracle 2 -->
+      <div class="supernova-card p-6 border-l-4 border-l-red-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Oracle Cloud Infrastructure</h3>
+        <p class="text-slate-400 text-sm">Data Science Professional</p>
+      </div>
+      <!-- Google -->
+      <div class="supernova-card p-6 border-l-4 border-l-blue-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Google Analytics</h3>
+        <p class="text-slate-400 text-sm">Certificação Profissional Google</p>
+      </div>
+      <!-- Recode -->
+      <div class="supernova-card p-6 border-l-4 border-l-purple-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Recode Pro AI</h3>
+        <p class="text-slate-400 text-sm">Desenvolvimento Web & Backend</p>
+      </div>
     </div>
   </section>
 
-  <!-- CHATBOT FLUTUANTE -->
-  <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-    <!-- Caixa de Chat (Escondida por padrão) -->
-    <div id="chat-box" class="hidden flex-col w-80 h-96 bg-[#0a0a0c] border border-purple-500/30 rounded-2xl shadow-2xl overflow-hidden mb-4">
-      <div class="bg-purple-900/20 p-4 border-b border-white/10 flex justify-between items-center">
-        <span class="text-white font-bold text-sm">Luiz AI Assistant</span>
-        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-      </div>
-      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col">
-        <div class="bg-slate-700 text-slate-200 p-2 rounded-lg text-sm max-w-[80%]">
-          Olá! Sou a IA do Luiz. Pergunte sobre minha experiência, skills ou contatos.
-        </div>
-      </div>
-      <div class="p-3 border-t border-white/10 flex gap-2">
-        <input id="chat-input" type="text" placeholder="Pergunte algo..." class="flex-1 bg-black/50 border border-white/10 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-purple-500">
-        <button id="chat-send" class="bg-purple-600 text-white px-3 rounded hover:bg-purple-500">➜</button>
-      </div>
-    </div>
-
-    <!-- Botão Redondo -->
-    <button id="chat-toggle" class="w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(124,58,237,0.5)] hover:scale-110 transition-transform cursor-pointer group">
-      <span class="text-2xl">🤖</span>
-      <span class="absolute right-full mr-4 bg-white text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity">
-        Fale com minha IA
-      </span>
-    </button>
-  </div>
+  <footer class="border-t border-white/5 py-12 text-center text-xs text-slate-600 font-mono" data-i18n="footer">
+    © 2025 Henrique Barbosa. Arquitetado nas estrelas.
+  </footer>
 
   <!-- Script Específico do Gráfico -->
-  <!-- Script Específico do Gráfico (Versão Blindada) -->
   <script is:inline>
-    // Usamos 'load' em vez de 'DOMContentLoaded' para ter certeza absoluta que o Chart.js baixou
     window.addEventListener('load', function() {
-      const ctx = document.getElementById('skillsChart');
-      
-      // Verificação dupla: Se o elemento existe E a biblioteca carregou
+      const ctx = document.getElementById('skillsChart')
       if(ctx && typeof Chart !== 'undefined') {
-        new Chart(ctx, {
+        new Chart(ctx, { // @ts-ignore
           type: 'radar',
           data: {
-            labels: ['Python', 'SQL', 'Machine Learning', 'Data Viz', 'Comunicação', 'Automação'],
+            labels: ['GenAI', 'Python', 'Cloud (Oracle/AWS)', 'Full Stack', 'Data Viz', 'Automação'],
             datasets: [{
-              label: 'Nível',
-              data: [90, 85, 75, 80, 95, 88], // Seus dados
-              backgroundColor: 'rgba(124, 58, 237, 0.2)', // Roxo transparente
-              borderColor: '#7c3aed', // Roxo sólido
-              borderWidth: 2,
+              label: 'Proficiency',
+              data: [95, 90, 85, 80, 88, 92],
+              backgroundColor: 'rgba(168, 85, 247, 0.2)',
+              borderColor: '#a855f7',
               pointBackgroundColor: '#fff',
-              pointBorderColor: '#7c3aed',
-              pointHoverBackgroundColor: '#7c3aed',
-              pointHoverBorderColor: '#fff'
+              pointBorderColor: '#a855f7'
             }]
           },
           options: {
-            responsive: true,
-            maintainAspectRatio: false,
             scales: {
               r: {
                 angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
                 grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                pointLabels: { 
-                  color: '#94a3b8', 
-                  font: { size: 11, family: "'Inter', sans-serif" } 
-                },
-                ticks: { display: false, backdropColor: 'transparent' },
-                suggestedMin: 0,
-                suggestedMax: 100
+                pointLabels: { color: '#94a3b8', font: { size: 11 } },
+                ticks: { display: false, backdropColor: 'transparent' }
               }
             },
-            plugins: { 
-              legend: { display: false },
-              tooltip: {
-                backgroundColor: 'rgba(10, 10, 12, 0.9)',
-                titleColor: '#fff',
-                bodyColor: '#cbd5e1',
-                borderColor: 'rgba(124, 58, 237, 0.3)',
-                borderWidth: 1
-              }
-            }
+            plugins: { legend: { display: false } }
           }
         });
-      } else {
-        console.warn('Chart.js não carregou ou canvas não encontrado.');
       }
     });
   </script>
