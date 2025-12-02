@@ -21,6 +21,9 @@ const { title } = Astro.props;
     <!-- PRELOADER (EFEITO SUPERNOVA) -->
     <div id="preloader" class="fixed inset-0 z-[200] flex flex-col justify-center items-center bg-[#000000] overflow-hidden">
       
+      <!-- Tela de Flash (controlada via JS/CSS) -->
+      <div id="white-flash" class="absolute inset-0 bg-white opacity-0 z-[201]"></div>
+      
       <!-- O Núcleo da Estrela (Massa Crítica) -->
       <div class="supernova-container relative flex justify-center items-center">
         <!-- Halo externo -->

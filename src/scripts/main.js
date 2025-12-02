@@ -1,37 +1,99 @@
-/* src/scripts/main.js - VERSÃO SUPERNOVA COM DELAY ESTENDIDO */
+/* src/scripts/main.js - VERSÃO DEFINITIVA COM SFX E PARTÍCULAS */
 
-// 0. CONSOLE SECRETO
+// 0. CONSOLE
 console.log(
     "%c H. BARBOSA %c SYSTEM ONLINE ",
     "background: #7c3aed; color: white; font-weight: bold; padding: 4px; border-radius: 3px 0 0 3px;",
     "background: #1e1e2e; color: #a6accd; padding: 4px; border-radius: 0 3px 3px 0;"
 );
-console.log(
-    "%c⚠ DETECÇÃO DE SINAL EXTERNO.\n%cAnalisando perfil... Visitante identificado.\nSe você procura inteligência de dados além do convencional, iniciou a conexão correta.\n\n📡 Contato: byronkingdev@gmail.com",
-    "color: #fbbf24; font-family: monospace; font-size: 12px;",
-    "color: #94a3b8; font-family: sans-serif; line-height: 1.5;"
-);
+
+// --- SFX ENGINE (Sons via CDN) ---
+const SFX = {
+    // Usando sons curtos e otimizados de UI sci-fi
+    explosion: new Audio('https://cdn.pixabay.com/audio/2022/03/10/audio_5b36934509.mp3'), // Som de impacto profundo
+    warp: new Audio('https://cdn.pixabay.com/audio/2022/03/24/audio_73e726880c.mp3'),     // Som de aceleração
+    
+    play(sound) {
+        sound.volume = 0.4; // Volume agradável
+        sound.currentTime = 0;
+        sound.play().catch(e => console.log("Áudio bloqueado pelo navegador (normal sem interação)"));
+    }
+};
 
 // 1. GERENCIAMENTO DA SUPERNOVA (PRELOADER)
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Agora esperamos 5 SEGUNDOS (5000ms) para criar suspense
-        // O visitante verá o núcleo pulsando e os anéis girando antes do colapso
+        // Mantém os 5 segundos de tensão inicial
         setTimeout(() => {
-            // Ativa a animação de explosão (flash de luz) definida no CSS
+            // Dispara a implosão visual
             preloader.classList.add('loading-finished');
             
-            // A animação de explosão dura 1.2s no CSS. 
-            // Esperamos ela terminar exatamente para remover o elemento da tela.
+            // Tenta tocar o som da explosão (pode ser bloqueado se o user não clicou na página ainda)
+            // Dica: A maioria dos navegadores bloqueia audio autoplay.
+            // O som funcionará melhor se o usuário já tiver interagido, mas tentamos mesmo assim.
+            SFX.play(SFX.explosion);
+
+            // Dispara as partículas da explosão
+            createExplosionParticles();
+            
+            // Remove o preloader após o flash
             setTimeout(() => {
                 preloader.style.display = 'none';
-            }, 1200); 
-        }, 5000); // <-- AQUI ESTÁ A MUDANÇA: 500ms -> 5000ms
+            }, 2000); 
+        }, 5000); 
     }
 });
 
-// 2. STARFIELD PROCEDURAL & WARP SPEED
+// --- SISTEMA DE PARTÍCULAS (EXPLOSÃO) ---
+function createExplosionParticles() {
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.inset = '0';
+    container.style.pointerEvents = 'none';
+    container.style.zIndex = '9999'; // Acima de tudo
+    document.body.appendChild(container);
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    // Cria 50 partículas
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.width = Math.random() * 4 + 2 + 'px'; // Tamanho variável
+        particle.style.height = particle.style.width;
+        particle.style.backgroundColor = Math.random() > 0.5 ? '#fff' : '#a855f7'; // Branco ou Roxo
+        particle.style.borderRadius = '50%';
+        particle.style.boxShadow = '0 0 10px ' + particle.style.backgroundColor;
+        
+        container.appendChild(particle);
+
+        // Animação individual com física simples
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 200 + 100; // Velocidade da explosão
+        const tx = Math.cos(angle) * window.innerWidth * 0.8;
+        const ty = Math.sin(angle) * window.innerHeight * 0.8;
+
+        particle.animate([
+            { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+            { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+        ], {
+            duration: Math.random() * 1000 + 500, // 0.5s a 1.5s
+            easing: 'cubic-bezier(0, .9, .57, 1)', // Sai rápido, desacelera
+            fill: 'forwards'
+        });
+    }
+
+    // Limpa o container depois que as partículas somem
+    setTimeout(() => {
+        container.remove();
+    }, 2000);
+}
+
+// 2. STARFIELD PROCEDURAL (Com correção de erro de raio negativo)
 const canvas = document.getElementById('starfield');
 let isWarpSpeed = false;
 
@@ -49,17 +111,14 @@ if (canvas) {
         reset(initial = false) {
             this.x = (Math.random() - 0.5) * width;
             this.y = (Math.random() - 0.5) * height;
-            // Se inicial, espalha em profundidade. Se não, começa lá no fundo (z = width)
             this.z = initial ? Math.random() * width : width;
             this.size = Math.random();
         }
 
         update() {
-            // Velocidade dinâmica: 80 em Warp, 2 normal
             const speed = isWarpSpeed ? 80 : 2; 
             this.z -= speed;
 
-            // Se passar da tela (z < 1), recicla a estrela
             if (this.z <= 1) {
                 this.reset();
                 this.z = width;
@@ -67,29 +126,39 @@ if (canvas) {
         }
 
         draw() {
+            // Se z for 0 ou negativo (muito perto ou erro), evita divisão por zero
+            if (this.z <= 0) return;
+
             // Projeção 3D: x = x_real / z
             const x = (this.x / this.z) * width + width / 2;
             const y = (this.y / this.z) * height + height / 2;
 
             // Escala baseada na proximidade (quanto menor z, maior o objeto)
-            const scale = (1 - this.z / width);
+            let scale = (1 - this.z / width);
+
+            // FIX: Evita erro de raio negativo se a tela for redimensionada e z > width
+            if (scale < 0) scale = 0;
+
             const r = this.size * scale * (isWarpSpeed ? 4 : 2);
 
             if (x < 0 || x > width || y < 0 || y > height) return;
 
             ctx.beginPath();
-            
+
             if (isWarpSpeed) {
                 // Efeito de Rastro (Warp)
                 const prevScale = (1 - (this.z + 100) / width);
-                const prevX = (this.x / (this.z + 100)) * width + width / 2;
-                const prevY = (this.y / (this.z + 100)) * height + height / 2;
-                
-                ctx.moveTo(prevX, prevY);
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = `rgba(168, 85, 247, ${scale})`; 
-                ctx.lineWidth = r;
-                ctx.stroke();
+                // Segurança extra para o traço também
+                if (prevScale > 0) {
+                    const prevX = (this.x / (this.z + 100)) * width + width / 2;
+                    const prevY = (this.y / (this.z + 100)) * height + height / 2;
+                    
+                    ctx.moveTo(prevX, prevY);
+                    ctx.lineTo(x, y);
+                    ctx.strokeStyle = `rgba(168, 85, 247, ${scale})`; 
+                    ctx.lineWidth = r;
+                    ctx.stroke();
+                }
             } else {
                 // Estrela normal
                 ctx.fillStyle = `rgba(255, 255, 255, ${scale})`;
@@ -114,7 +183,6 @@ if (canvas) {
     }
 
     function animate() {
-        // Rastro suave
         ctx.fillStyle = isWarpSpeed ? 'rgba(2, 4, 10, 0.3)' : '#02040a';
         ctx.fillRect(0, 0, width, height);
         
@@ -126,7 +194,7 @@ if (canvas) {
     initStars();
 }
 
-// 3. KONAMI CODE (Ativador do Warp)
+// 3. KONAMI CODE
 const konamiCode = [
     "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
     "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
@@ -152,14 +220,13 @@ function triggerWarpDrive() {
     
     if (isWarpSpeed) {
         body.classList.add("warp-active");
+        SFX.play(SFX.warp); // Toca o som de dobra espacial!
         
-        // Notificação Visual
         const notification = document.createElement('div');
         notification.innerHTML = "WARP DRIVE <span style='color:white'>ENGAGED</span>";
         notification.style.cssText = "position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); color:#a855f7; font-family:monospace; font-size:clamp(2rem, 5vw, 4rem); font-weight:bold; z-index:9999; pointer-events:none; text-shadow:0 0 30px #a855f7; white-space:nowrap; letter-spacing: 0.1em;";
         document.body.appendChild(notification);
         
-        // Animação da notificação
         notification.animate([
             { opacity: 0, transform: 'translate(-50%, -50%) scale(0.5)' },
             { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)', offset: 0.1 },
@@ -181,7 +248,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
 const cursor = document.getElementById('custom-cursor');
 const cursorBlur = document.getElementById('custom-cursor-blur');
 
@@ -202,7 +268,6 @@ const sidebarLinks = document.querySelectorAll('.sidebar-link');
 
 function toggleMenu() {
     if (!menuToggle || !sidebar) return;
-    
     menuToggle.classList.toggle('open');
     sidebar.classList.toggle('open');
     if (sidebarOverlay) sidebarOverlay.classList.toggle('open');

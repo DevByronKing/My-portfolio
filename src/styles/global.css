@@ -43,44 +43,34 @@
 
 /* --- A SEQUÊNCIA DE EXPLOSÃO (CORRIGIDA) --- */
 
-.loading-finished .supernova-core {
-    /* Duração ajustada para ser rápida e impactante */
-    animation: supernova-flash 1.2s cubic-bezier(0.6, 0.05, 0.01, 0.99) forwards;
-}
-
-/* Esconde os anéis imediatamente no início da explosão */
+/* Esconde os elementos visuais quando a explosão começa */
 .loading-finished .accretion-disk,
 .loading-finished .loader-text {
     opacity: 0;
     transition: opacity 0.2s ease-out;
 }
 
-@keyframes supernova-flash {
-    /* 1. O COLAPSO (Implosão rápida) */
-    0% { transform: scale(1); }
-    40% { 
-        transform: scale(0.05); /* Encolhe para um ponto */
-        background: #fff;
-        opacity: 1;
-        /* A luz se concentra antes de explodir */
-        box-shadow: 0 0 100px 50px white; 
-    }
-    
-    /* 2. O FLASH (Sem "bola", apenas luz) */
-    41% {
-        transform: scale(0.05); /* Mantém o núcleo pequeno */
-        opacity: 0; /* O núcleo físico some */
-        /* Usamos box-shadow gigante para "pintar" a tela de branco sem formas geométricas */
-        box-shadow: 0 0 0 500vmax white; 
-    }
-    
-    /* 3. O FADE OUT (Revela o site) */
-    100% {
-        transform: scale(0.05);
+/* Animação 1: O núcleo apenas encolhe e some */
+.loading-finished .supernova-core {
+    animation: core-collapse 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+@keyframes core-collapse {
+    to {
+        transform: scale(0.01);
         opacity: 0;
-        /* A luz branca se dissipa para transparente */
-        box-shadow: 0 0 0 500vmax rgba(255, 255, 255, 0); 
     }
+}
+
+/* Animação 2: A tela de flash branco */
+.loading-finished #white-flash {
+    /* Delay para começar após o núcleo começar a encolher */
+    animation: flash-bang 1.5s ease-out 0.35s forwards;
+}
+@keyframes flash-bang {
+    /* Aparece instantaneamente */
+    0% { opacity: 1; }
+    /* Dissipa suavemente */
+    100% { opacity: 0; }
 }
 
 /* --- OUTROS EFEITOS GLOBAIS --- */
