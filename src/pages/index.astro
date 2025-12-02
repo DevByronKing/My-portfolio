@@ -13,6 +13,12 @@ const techStack = ["Python", "TensorFlow", "RAG", "Oracle Cloud", "Docker", "NLP
   <!-- HERO SECTION -->
   <header class="min-h-screen flex flex-col justify-center relative reveal">
     
+    <!-- Language Switcher -->
+    <div class="absolute top-8 right-8 flex gap-2 font-mono text-xs z-10">
+      <button id="lang-pt" class="px-3 py-1 rounded border border-transparent hover:border-white/20 transition-colors">PT</button>
+      <button id="lang-en" class="px-3 py-1 rounded border border-transparent hover:border-white/20 transition-colors text-slate-500">EN</button>
+    </div>
+
     <!-- Status -->
     <div class="inline-flex items-center gap-2 px-3 py-1 w-fit rounded-full bg-white/5 border border-white/10 text-purple-300 text-xs font-mono mb-8 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
       <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_10px_#4ade80]"></span>
@@ -20,7 +26,7 @@ const techStack = ["Python", "TensorFlow", "RAG", "Oracle Cloud", "Docker", "NLP
     </div>
 
     <!-- Nome e Título -->
-    <h1 class="text-6xl md:text-8xl font-serif font-bold mb-6 text-white tracking-tighter drop-shadow-2xl">
+    <h1 class="glitch-text text-6xl md:text-8xl font-serif font-bold mb-6 tracking-tighter drop-shadow-2xl" data-text="Henrique Barbosa">
       Henrique Barbosa<span class="text-purple-500">.</span>
     </h1>
     <h2 class="text-xl md:text-2xl font-mono text-purple-400 mb-8" data-i18n="role">
@@ -154,11 +160,86 @@ const techStack = ["Python", "TensorFlow", "RAG", "Oracle Cloud", "Docker", "NLP
   </section>
 
   <footer class="border-t border-white/5 py-12 text-center text-xs text-slate-600 font-mono" data-i18n="footer">
-    © 2025 Henrique Barbosa. Arquitetado nas estrelas.
+    © 2025 Henrique Barbosa. Arquitetado nas estrelas.<br>
+    <span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Digite ↑ ↑ ↓ ↓ ← → ← → B A para entrar em modo "Warp Speed".</span>
   </footer>
 
   <!-- Script Específico do Gráfico -->
   <script is:inline>
+    // --- INTERNATIONALIZATION (i18n) SCRIPT ---
+    const translations = {
+      pt: {
+        open: "DISPONÍVEL PARA PROJETOS",
+        role: "Cientista de Dados & Eng. de IA",
+        heroText: 'Arquitetando a <span class="text-white font-bold bg-purple-600/20 px-1">inteligência autônoma</span> que redefine limites.',
+        heroSub: "Transformo o caos de dados corporativos em previsibilidade algorítmica e agentes que pensam.",
+        btnContact: "Iniciar Transmissão",
+        skillsTitle: "Arsenal Tecnológico",
+        expTitle: "Missões Críticas",
+        seducRole: "Líder de Desenvolvimento & Inovação",
+        seducDesc: "Responsável pela arquitetura e supervisão de todo o ecossistema de projetos.",
+        cortexDesc: "Agente autônomo analista (Gemini API + RAG + NLP).",
+        sitecDesc: "Gestão Full Stack integrando todas as ferramentas.",
+        tickerDesc: "Ponto eletrônico digital (Antes manual).",
+        readerDesc: "Automação de leitura de relatórios e férias.",
+        seredeRole: "Analista de Dados & Operações",
+        seredeDesc: "Coleta e análise de dados operacionais. Monitoramento de KPIs de equipe e gestão de processos seletivos (Gupy/E-social). Otimização de fluxo documental.",
+        certTitle: "Credenciais de Elite",
+        footer: '© 2025 Henrique Barbosa. Arquitetado nas estrelas.<br><span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Digite ↑ ↑ ↓ ↓ ← → ← → B A para entrar em modo "Warp Speed".</span>'
+      },
+      en: {
+        open: "AVAILABLE FOR PROJECTS",
+        role: "Data Scientist & AI Engineer",
+        heroText: 'Architecting <span class="text-white font-bold bg-purple-600/20 px-1">autonomous intelligence</span> that redefines boundaries.',
+        heroSub: "I transform corporate data chaos into algorithmic predictability and thinking agents.",
+        btnContact: "Start Transmission",
+        skillsTitle: "Technological Arsenal",
+        expTitle: "Critical Missions",
+        seducRole: "Development & Innovation Lead",
+        seducDesc: "Responsible for the architecture and supervision of the entire project ecosystem.",
+        cortexDesc: "Autonomous analyst agent (Gemini API + RAG + NLP).",
+        sitecDesc: "Full Stack management integrating all tools.",
+        tickerDesc: "Digital time clock (Previously manual).",
+        readerDesc: "Automation of report and vacation reading.",
+        seredeRole: "Data & Operations Analyst",
+        seredeDesc: "Collection and analysis of operational data. Monitoring of team KPIs and management of selection processes (Gupy/E-social). Optimization of document flow.",
+        certTitle: "Elite Credentials",
+        footer: '© 2025 Henrique Barbosa. Architected in the stars.<br><span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Type ↑ ↑ ↓ ↓ ← → ← → B A to enter "Warp Speed" mode.</span>'
+      }
+    };
+
+    const setLanguage = (lang) => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      localStorage.setItem('language', lang);
+      updateLangButtons(lang);
+    };
+
+    const updateLangButtons = (activeLang) => {
+      const ptButton = document.getElementById('lang-pt');
+      const enButton = document.getElementById('lang-en');
+      if (activeLang === 'pt') {
+        ptButton.classList.remove('text-slate-500');
+        enButton.classList.add('text-slate-500');
+      } else {
+        enButton.classList.remove('text-slate-500');
+        ptButton.classList.add('text-slate-500');
+      }
+    };
+
+    document.getElementById('lang-pt').addEventListener('click', () => setLanguage('pt'));
+    document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+
+    // Set initial language on page load
+    const savedLang = localStorage.getItem('language') || 'pt';
+    setLanguage(savedLang);
+    // --- END i18n SCRIPT ---
+
+    // --- CHART SCRIPT ---
     window.addEventListener('load', function() {
       const ctx = document.getElementById('skillsChart')
       if(ctx && typeof Chart !== 'undefined') {

@@ -13,20 +13,37 @@ const { title } = Astro.props;
     <!-- Chart.js via CDN para evitar peso no build -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body class="bg-[#02040a] overflow-x-hidden selection:bg-purple-500 selection:text-white">
+  <body class="bg-[#02040a] overflow-x-hidden selection:bg-purple-500 selection:text-white relative">
     
-    <!-- PRELOADER (PORTAL ESPACIAL) -->
-    <div id="preloader" class="transition-opacity duration-1000">
-      <div class="portal-loader"></div>
-      <div class="loader-text">ABRINDO PORTAL...</div>
+    <!-- EFEITO CRT / SCANLINES (Monitor Antigo - Sutil) -->
+    <div class="scanlines"></div>
+
+    <!-- PRELOADER (EFEITO SUPERNOVA) -->
+    <div id="preloader" class="fixed inset-0 z-[200] flex flex-col justify-center items-center bg-[#000000] overflow-hidden">
+      
+      <!-- O Núcleo da Estrela (Massa Crítica) -->
+      <div class="supernova-container relative flex justify-center items-center">
+        <!-- Halo externo -->
+        <div class="absolute w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <!-- Núcleo Instável -->
+        <div class="supernova-core"></div>
+        <!-- Anéis de Acreção -->
+        <div class="accretion-disk"></div>
+      </div>
+
+      <!-- Texto de Status (Tecnológico) -->
+      <div class="loader-text mt-16 text-center z-10 mix-blend-screen">
+        <span class="block text-[10px] text-purple-300/50 tracking-[0.5em] mb-2 uppercase">Inicializando Sequência</span>
+        <span class="text-white font-mono text-sm tracking-widest animate-pulse">CARREGANDO SINGULARIDADE...</span>
+      </div>
     </div>
 
-    <!-- CURSOR -->
+    <!-- CURSOR PERSONALIZADO -->
     <div id="custom-cursor" class="hidden md:block"></div>
     <div id="custom-cursor-blur" class="hidden md:block"></div>
 
-    <!-- FUNDO PARALLAX LIMPO -->
-    <div class="space-bg"></div>
+    <!-- FUNDO STARFIELD PROCEDURAL (CANVAS) -->
+    <canvas id="starfield" class="fixed inset-0 z-[-3] w-full h-full pointer-events-none"></canvas>
     <div class="planet-glow planet-1"></div>
     <div class="planet-glow planet-2"></div>
 
@@ -55,6 +72,11 @@ const { title } = Astro.props;
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="max-w-5xl mx-auto px-6 py-12 relative z-10 transition-transform duration-500" id="main-content">
       <slot />
+    </div>
+
+    <!-- EASTER EGG TIP -->
+    <div class="fixed bottom-4 right-4 text-[10px] text-white/20 font-mono hidden md:block select-none pointer-events-none opacity-50 hover:opacity-100 transition-opacity">
+      ↑ ↑ ↓ ↓ ← → ← → B A
     </div>
 
     <script src="../scripts/main.js"></script>
