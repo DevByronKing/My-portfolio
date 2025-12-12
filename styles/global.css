@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-void text-slate-300;
+    /* Isso garante uma rolagem suave */
+    scroll-behavior: smooth; 
+}
+
+/* Efeito de brilho customizado para textos */
+.text-glow {
+    text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+}
+
+/* Scrollbar personalizada (opcional, mas chique) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0c;
+}
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+}

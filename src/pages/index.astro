@@ -1,0 +1,485 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const techStack = ["Python", "TensorFlow", "RAG", "Oracle Cloud", "Docker", "NLP", "Gemini API", "React"];
+---
+
+<BaseLayout title="Henrique Barbosa | AI Engineer">
+  
+  <!-- HERO SECTION -->
+  <header class="min-h-screen flex flex-col justify-center relative reveal">
+    
+    <!-- Language Switcher -->
+    <div class="absolute top-8 right-8 flex gap-2 font-mono text-xs z-10">
+      <button id="lang-pt" class="px-3 py-1 rounded border border-transparent hover:border-white/20 transition-colors" aria-label="Mudar idioma para Português">PT</button>
+      <button id="lang-en" class="px-3 py-1 rounded border border-transparent hover:border-white/20 transition-colors text-slate-500" aria-label="Switch language to English">EN</button>
+    </div>
+
+    <!-- Status -->
+    <div class="inline-flex items-center gap-2 px-3 py-1 w-fit rounded-full bg-white/5 border border-white/10 text-purple-300 text-xs font-mono mb-8 backdrop-blur-md hover:bg-white/10 transition-colors cursor-default">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_10px_#4ade80]"></span>
+      <span data-i18n="open">DISPONÍVEL PARA PROJETOS</span>
+    </div>
+
+    <!-- Nome e Título -->
+    <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-bold mb-6 tracking-tighter">
+      <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-purple-600 bg-clip-text text-transparent">
+        Henrique Barbosa
+      </span>
+      <span class="text-purple-500">.</span>
+    </h1>
+    <h2 class="text-xl md:text-2xl font-mono text-purple-400 mb-8">
+      <span id="typing-text"></span>
+      <span class="animate-pulse">|</span>
+    </h2>
+
+    <!-- Texto de Impacto -->
+    <div class="text-lg md:text-xl font-sans text-slate-400 max-w-2xl leading-relaxed border-l-2 border-purple-500/50 pl-6 mb-12">
+      <p data-i18n="heroText">
+        Arquitetando a <span class="text-white font-bold bg-purple-600/20 px-1">inteligência autônoma</span> que redefine limites.
+      </p>
+      <p class="mt-4 text-sm text-slate-500" data-i18n="heroSub">
+        Transformo o caos de dados corporativos em previsibilidade algorítmica e agentes que pensam.
+      </p>
+    </div>
+
+    <!-- Botões de Contato -->
+    <div class="flex flex-wrap gap-4">
+      <a href="https://wa.me/5591981646532" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" 
+         aria-label="Entrar em contato via WhatsApp">
+        <!-- Efeito de brilho -->
+        <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+        <span class="relative flex items-center gap-2">
+          <span data-i18n="btnContact">Iniciar Transmissão</span>
+          <span class="group-hover:translate-x-1 transition-transform" aria-hidden="true">→</span>
+        </span>
+      </a>
+      <a href="mailto:byronkingdev@gmail.com" 
+         class="px-8 py-4 border-2 border-purple-500/50 text-white rounded-lg hover:bg-purple-500/10 hover:border-purple-500 transition-all duration-300 font-mono backdrop-blur-sm" 
+         aria-label="Enviar email">
+        Email Uplink
+      </a>
+    </div>
+  </header>
+
+  <!-- QUASAR DIVIDER -->
+  <div class="quasar-line"></div>
+
+  <!-- SKILLS & CHART -->
+  <section id="skills" class="section-spacing reveal">
+    <div class="mb-12">
+      <span class="text-xs font-mono text-purple-400 uppercase tracking-[0.3em] block mb-2">
+        // 01
+      </span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+        Arsenal Tecnológico
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <!-- Tech Stack Categorizado -->
+      <div class="space-y-8">
+        {[
+          { category: "AI & ML", techs: ["Python", "TensorFlow", "Gemini API", "RAG", "NLP"] },
+          { category: "Cloud & DevOps", techs: ["Oracle Cloud", "Docker", "AWS"] },
+          { category: "Frontend", techs: ["React", "Astro", "Tailwind CSS"] },
+          { category: "Backend", techs: ["Node.js", "FastAPI", "PostgreSQL"] }
+        ].map(({ category, techs }) => (
+          <div>
+            <h3 class="text-xs font-mono text-purple-400 uppercase tracking-wider mb-3">
+              {category}
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              {techs.map(tech => (
+                <span class="group relative px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-slate-300 hover:bg-white/10 hover:border-purple-500/50 transition-all overflow-hidden">
+                  <span class="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+                  <span class="relative z-10">{tech}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <!-- Skill Bars -->
+      <div class="space-y-6">
+        <h3 class="text-xs font-mono text-purple-400 uppercase tracking-wider mb-6">
+          Proficiência
+        </h3>
+        {[
+          { skill: "GenAI & LLMs", level: 95 },
+          { skill: "Python & Data Science", level: 90 },
+          { skill: "Cloud Architecture", level: 85 },
+          { skill: "Full Stack Development", level: 80 }
+        ].map(({ skill, level }) => (
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm text-slate-300">{skill}</span>
+              <span class="text-sm text-purple-400 font-mono">{level}%</span>
+            </div>
+            <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+              <div 
+                class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000 ease-out"
+                style={`width: ${level}%`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIA DETALHADA -->
+  <section id="experiencia" class="section-spacing reveal">
+    <div class="mb-12">
+      <span class="text-xs font-mono text-purple-400 uppercase tracking-[0.3em] block mb-2">
+        // 02
+      </span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+        Missões Críticas
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
+    </div>
+    
+    <div class="space-y-16">
+      <!-- SEDUC (DESTAQUE) -->
+      <article class="relative pl-8 border-l-2 border-purple-500/30">
+        <div class="absolute -left-[9px] top-0 w-4 h-4 bg-[#030014] border-2 border-purple-500 rounded-full shadow-[0_0_15px_#a855f7]"></div>
+        
+        <h3 class="text-3xl font-serif text-white mb-1">SEDUC - PA</h3>
+        <div class="text-purple-400 font-mono text-sm mb-4" data-i18n="seducRole">Líder de Desenvolvimento & Inovação</div>
+        
+        <p class="text-slate-400 mb-6 max-w-3xl leading-relaxed" data-i18n="seducDesc">
+          Responsável pela arquitetura e supervisão de todo o ecossistema de projetos.
+        </p>
+
+        <!-- Sub-projetos (Grid de Cards com Efeito 3D) -->
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">CortexIA 🧠</h4>
+            <p class="text-xs text-slate-500" data-i18n="cortexDesc">Agente autônomo analista (Gemini API + RAG + NLP).</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Sitec Web 🌐</h4>
+            <p class="text-xs text-slate-500" data-i18n="sitecDesc">Gestão Full Stack integrando todas as ferramentas.</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Ticker ⏱️</h4>
+            <p class="text-xs text-slate-500" data-i18n="tickerDesc">Ponto eletrônico digital (Antes manual).</p>
+          </div>
+          <div class="supernova-card p-4 tilt-card" data-tilt>
+            <h4 class="text-white font-bold mb-1">Reader & Hollides 📄</h4>
+            <p class="text-xs text-slate-500" data-i18n="readerDesc">Automação de leitura de relatórios e férias.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- SEREDE -->
+      <article class="relative pl-8 border-l-2 border-slate-700/30">
+        <div class="absolute -left-[7px] top-0 w-3 h-3 bg-slate-700 rounded-full"></div>
+        <h3 class="text-2xl font-serif text-slate-300 mb-1">Serede Rede Conecta</h3>
+        <div class="text-slate-500 font-mono text-sm mb-4" data-i18n="seredeRole">Analista de Dados & Operações</div>
+        <p class="text-slate-500 max-w-3xl" data-i18n="seredeDesc">
+          Coleta e análise de dados operacionais. Monitoramento de KPIs de equipe e gestão de processos seletivos (Gupy/E-social). Otimização de fluxo documental.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CERTIFICAÇÕES -->
+  <section id="certificacoes" class="section-spacing reveal">
+    <div class="mb-12">
+      <span class="text-xs font-mono text-purple-400 uppercase tracking-[0.3em] block mb-2">
+        // 04
+      </span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+        Credenciais de Elite
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+      <!-- Oracle 1 -->
+      <div class="supernova-card p-6 border-l-4 border-l-red-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Oracle Cloud Infrastructure 2025</h3>
+        <p class="text-slate-400 text-sm">Certified Generative AI Professional</p>
+      </div>
+      <!-- Oracle 2 -->
+      <div class="supernova-card p-6 border-l-4 border-l-red-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Oracle Cloud Infrastructure</h3>
+        <p class="text-slate-400 text-sm">Data Science Professional</p>
+      </div>
+      <!-- Google -->
+      <div class="supernova-card p-6 border-l-4 border-l-blue-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Google Analytics</h3>
+        <p class="text-slate-400 text-sm">Certificação Profissional Google</p>
+      </div>
+      <!-- Recode -->
+      <div class="supernova-card p-6 border-l-4 border-l-purple-500 tilt-card" data-tilt>
+        <h3 class="text-white font-bold text-lg">Recode Pro AI</h3>
+        <p class="text-slate-400 text-sm">Desenvolvimento Web & Backend</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETOS EM DESTAQUE -->
+  <section id="projetos" class="section-spacing reveal">
+    <div class="mb-12">
+      <span class="text-xs font-mono text-purple-400 uppercase tracking-[0.3em] block mb-2">
+        // 03
+      </span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+        Projetos em Destaque
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      {sortedProjects.slice(0, 4).map(project => (
+        <article class="group project-card">
+          <!-- Badge de tecnologia principal -->
+          <div class="flex gap-2 mb-4 flex-wrap">
+            {project.data.tags.slice(0, 3).map(tag => (
+              <span class="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-300">
+                {tag}
+              </span>
+            ))}
+          </div>
+          
+          <!-- Título e descrição -->
+          <h3 class="text-2xl font-serif font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+            {project.data.title}
+          </h3>
+          <p class="text-slate-300 mb-6 leading-relaxed text-sm">
+            {project.data.description}
+          </p>
+          
+          <!-- Link -->
+          <div class="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors font-mono text-sm">
+            <span>Ver detalhes</span>
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- IMPACTO EM NÚMEROS -->
+  <section class="section-spacing reveal">
+    <div class="mb-12">
+      <span class="text-xs font-mono text-purple-400 uppercase tracking-[0.3em] block mb-2">
+        // 05
+      </span>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-3">
+        Impacto em Números
+      </h2>
+      <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-transparent"></div>
+    </div>
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {[
+        { number: "5K+", label: "Usuários Ativos", icon: "👥" },
+        { number: "10+", label: "Projetos Entregues", icon: "🚀" },
+        { number: "95%", label: "Precisão IA", icon: "🎯" },
+        { number: "200h", label: "Economizadas/Mês", icon: "⚡" }
+      ].map(stat => (
+        <div class="text-center group">
+          <div class="text-4xl mb-2">{stat.icon}</div>
+          <div class="text-3xl md:text-4xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
+            {stat.number}
+          </div>
+          <div class="text-sm text-slate-400 font-mono">
+            {stat.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <footer class="border-t border-white/5 py-12 text-center text-slate-300 font-mono">
+    <div class="mb-6">
+      <div class="flex justify-center gap-6 mb-4">
+        <a href="https://github.com/henrique-barbosa" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2" aria-label="GitHub">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-sm">GitHub</span>
+        </a>
+        <a href="https://linkedin.com/in/henrique-barbosa-ai" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2" aria-label="LinkedIn">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          <span class="text-sm">LinkedIn</span>
+        </a>
+        <a href="mailto:byronkingdev@gmail.com" class="text-slate-400 hover:text-white transition-colors flex items-center gap-2" aria-label="Email">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <span class="text-sm">Email</span>
+        </a>
+      </div>
+    </div>
+    <div class="text-xs text-slate-600" data-i18n="footer">
+      © 2025 Henrique Barbosa. Arquitetado nas estrelas.<br>
+      <span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Digite ↑ ↑ ↓ ↓ ← → ← → B A para entrar em modo "Warp Speed".</span>
+    </div>
+  </footer>
+
+  <!-- Script Específico do Gráfico -->
+  <script is:inline>
+    // --- INTERNATIONALIZATION (i18n) SCRIPT ---
+    const translations = {
+      pt: {
+        open: "DISPONÍVEL PARA PROJETOS",
+        role: "Cientista de Dados & Eng. de IA",
+        heroText: 'Arquitetando a <span class="text-white font-bold bg-purple-600/20 px-1">inteligência autônoma</span> que redefine limites.',
+        heroSub: "Transformo o caos de dados corporativos em previsibilidade algorítmica e agentes que pensam.",
+        btnContact: "Iniciar Transmissão",
+        skillsTitle: "Arsenal Tecnológico",
+        expTitle: "Missões Críticas",
+        seducRole: "Líder de Desenvolvimento & Inovação",
+        seducDesc: "Responsável pela arquitetura e supervisão de todo o ecossistema de projetos.",
+        cortexDesc: "Agente autônomo analista (Gemini API + RAG + NLP).",
+        sitecDesc: "Gestão Full Stack integrando todas as ferramentas.",
+        tickerDesc: "Ponto eletrônico digital (Antes manual).",
+        readerDesc: "Automação de leitura de relatórios e férias.",
+        seredeRole: "Analista de Dados & Operações",
+        seredeDesc: "Coleta e análise de dados operacionais. Monitoramento de KPIs de equipe e gestão de processos seletivos (Gupy/E-social). Otimização de fluxo documental.",
+        certTitle: "Credenciais de Elite",
+        footer: '© 2025 Henrique Barbosa. Arquitetado nas estrelas.<br><span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Digite ↑ ↑ ↓ ↓ ← → ← → B A para entrar em modo "Warp Speed".</span>'
+      },
+      en: {
+        open: "AVAILABLE FOR PROJECTS",
+        role: "Data Scientist & AI Engineer",
+        heroText: 'Architecting <span class="text-white font-bold bg-purple-600/20 px-1">autonomous intelligence</span> that redefines boundaries.',
+        heroSub: "I transform corporate data chaos into algorithmic predictability and thinking agents.",
+        btnContact: "Start Transmission",
+        skillsTitle: "Technological Arsenal",
+        expTitle: "Critical Missions",
+        seducRole: "Development & Innovation Lead",
+        seducDesc: "Responsible for the architecture and supervision of the entire project ecosystem.",
+        cortexDesc: "Autonomous analyst agent (Gemini API + RAG + NLP).",
+        sitecDesc: "Full Stack management integrating all tools.",
+        tickerDesc: "Digital time clock (Previously manual).",
+        readerDesc: "Automation of report and vacation reading.",
+        seredeRole: "Data & Operations Analyst",
+        seredeDesc: "Collection and analysis of operational data. Monitoring of team KPIs and management of selection processes (Gupy/E-social). Optimization of document flow.",
+        certTitle: "Elite Credentials",
+        footer: '© 2025 Henrique Barbosa. Architected in the stars.<br><span class="text-slate-700 mt-2 block">Easter Egg (Konami Code): Type ↑ ↑ ↓ ↓ ← → ← → B A to enter "Warp Speed" mode.</span>'
+      }
+    };
+
+    const setLanguage = (lang) => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      localStorage.setItem('language', lang);
+      updateLangButtons(lang);
+    };
+
+    const updateLangButtons = (activeLang) => {
+      const ptButton = document.getElementById('lang-pt');
+      const enButton = document.getElementById('lang-en');
+      if (activeLang === 'pt') {
+        ptButton.classList.remove('text-slate-500');
+        enButton.classList.add('text-slate-500');
+      } else {
+        enButton.classList.remove('text-slate-500');
+        ptButton.classList.add('text-slate-500');
+      }
+    };
+
+    document.getElementById('lang-pt').addEventListener('click', () => setLanguage('pt'));
+    document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+
+    // Set initial language on page load
+    const savedLang = localStorage.getItem('language') || 'pt';
+    setLanguage(savedLang);
+    // --- END i18n SCRIPT ---
+
+    // --- TYPING EFFECT SCRIPT ---
+    const roles = [
+      "Cientista de Dados & Eng. de IA",
+      "AI Engineer & Data Scientist",
+      "Especialista em GenAI",
+      "Oracle Cloud Professional"
+    ];
+    
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    function typeEffect() {
+      const current = roles[roleIndex];
+      const typingElement = document.getElementById('typing-text');
+      
+      if (!typingElement) return;
+      
+      if (isDeleting) {
+        typingElement.textContent = current.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingElement.textContent = current.substring(0, charIndex + 1);
+        charIndex++;
+      }
+      
+      if (!isDeleting && charIndex === current.length) {
+        setTimeout(() => isDeleting = true, 2000);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+      }
+      
+      const speed = isDeleting ? 50 : 100;
+      setTimeout(typeEffect, speed);
+    }
+    
+    typeEffect();
+    // --- END TYPING EFFECT SCRIPT ---
+
+    // --- CHART SCRIPT ---
+    window.addEventListener('load', function() {
+      const ctx = document.getElementById('skillsChart')
+      if(ctx && typeof Chart !== 'undefined') {
+        new Chart(ctx, { // @ts-ignore
+          type: 'radar',
+          data: {
+            labels: ['GenAI', 'Python', 'Cloud (Oracle/AWS)', 'Full Stack', 'Data Viz', 'Automação'],
+            datasets: [{
+              label: 'Proficiency',
+              data: [95, 90, 85, 80, 88, 92],
+              backgroundColor: 'rgba(168, 85, 247, 0.2)',
+              borderColor: '#a855f7',
+              pointBackgroundColor: '#fff',
+              pointBorderColor: '#a855f7'
+            }]
+          },
+          options: {
+            scales: {
+              r: {
+                angleLines: { color: 'rgba(255, 255, 255, 0.05)' },
+                grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                pointLabels: { color: '#94a3b8', font: { size: 11 } },
+                ticks: { display: false, backdropColor: 'transparent' }
+              }
+            },
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+    });
+  </script>
+
+</BaseLayout>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://henriquebarbosa.dev/sitemap.xml
+
+# Disallow admin areas (if any in the future)
+Disallow: /admin/
+Disallow: /_astro/

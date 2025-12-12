@@ -1,0 +1,112 @@
+---
+import '../styles/global.css';
+import '@fontsource/lora';
+import '@fontsource/inter';
+const { title } = Astro.props;
+---
+
+<html lang="pt-br" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    
+    <!-- SEO Básico -->
+    <meta name="description" content="Henrique Barbosa - Cientista de Dados e Engenheiro de IA especializado em GenAI, Python, RAG e Oracle Cloud. Disponível para projetos." />
+    <meta name="keywords" content="Cientista de Dados, Engenheiro IA, GenAI, Python, TensorFlow, RAG, Oracle Cloud, Machine Learning, Deep Learning, NLP" />
+    <meta name="author" content="Henrique Barbosa" />
+    
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:title" content="Henrique Barbosa | AI Engineer & Data Scientist" />
+    <meta property="og:description" content="Arquitetando inteligência autônoma que redefine limites" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://henriquebarbosa.dev" />
+    <meta property="og:image" content="https://henriquebarbosa.dev/og-image.jpg" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Henrique Barbosa | AI Engineer" />
+    <meta name="twitter:description" content="Cientista de Dados & Eng. de IA especializado em GenAI e Oracle Cloud" />
+    <meta name="twitter:image" content="https://henriquebarbosa.dev/twitter-card.jpg" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Chart.js via CDN para evitar peso no build -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="bg-[#02040a] overflow-x-hidden selection:bg-purple-500 selection:text-white relative">
+    
+    <!-- EFEITO CRT / SCANLINES (Monitor Antigo - Sutil) -->
+    <div class="scanlines"></div>
+
+    <!-- PRELOADER (EFEITO SUPERNOVA) -->
+    <div id="preloader" class="fixed inset-0 z-[200] flex flex-col justify-center items-center bg-[#000000] overflow-hidden">
+      
+      <!-- Tela de Flash (controlada via JS/CSS) -->
+      <div id="white-flash" class="absolute inset-0 bg-white opacity-0 z-[201]"></div>
+      
+      <!-- O Núcleo da Estrela (Massa Crítica) -->
+      <div class="supernova-container relative flex justify-center items-center">
+        <!-- Halo externo -->
+        <div class="absolute w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <!-- Núcleo Instável -->
+        <div class="supernova-core"></div>
+        <!-- Anéis de Acreção -->
+        <div class="accretion-disk"></div>
+      </div>
+
+      <!-- Texto de Status (Tecnológico) -->
+      <div class="loader-text mt-16 text-center z-10 mix-blend-screen">
+        <span class="block text-[10px] text-purple-300/50 tracking-[0.5em] mb-2 uppercase">Inicializando Sequência</span>
+        <span class="text-white font-mono text-sm tracking-widest animate-pulse">CARREGANDO SINGULARIDADE...</span>
+      </div>
+    </div>
+
+    <!-- CURSOR PERSONALIZADO -->
+    <div id="custom-cursor" class="hidden md:block"></div>
+    <div id="custom-cursor-blur" class="hidden md:block"></div>
+
+    <!-- FUNDO STARFIELD PROCEDURAL (CANVAS) -->
+    <canvas id="starfield" class="fixed inset-0 z-[-3] w-full h-full pointer-events-none"></canvas>
+    <div class="planet-glow planet-1"></div>
+    <div class="planet-glow planet-2"></div>
+
+    <!-- MENU HAMBÚRGUER (FIXO) -->
+    <div id="menu-toggle" class="menu-btn">
+      <div class="menu-line line-1"></div>
+      <div class="menu-line line-2"></div>
+      <div class="menu-line line-3"></div>
+    </div>
+
+    <!-- SIDEBAR OVERLAY & MENU -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+    <nav id="sidebar" class="sidebar-menu flex flex-col justify-center px-12">
+      <a href="#" class="sidebar-link">Início</a>
+      <a href="#skills" class="sidebar-link">Arsenal</a>
+      <a href="#experiencia" class="sidebar-link">Missões</a>
+      <a href="#certificacoes" class="sidebar-link">Credenciais</a>
+      
+      <div class="mt-12 pt-8 border-t border-white/10">
+        <p class="text-xs text-slate-500 font-mono mb-4">COMUNICAÇÃO</p>
+        <a href="https://wa.me/5591981646532" target="_blank" class="block text-sm text-purple-400 hover:text-white mb-2">WhatsApp ↗</a>
+        <a href="mailto:byronkingdev@gmail.com" class="block text-sm text-purple-400 hover:text-white">Email ↗</a>
+      </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="max-w-5xl mx-auto px-6 py-12 relative z-10 transition-transform duration-500" id="main-content">
+      <slot />
+    </div>
+
+    <!-- EASTER EGG TIP -->
+    <div class="fixed bottom-4 right-4 text-[10px] text-white/20 font-mono hidden md:block select-none pointer-events-none opacity-50 hover:opacity-100 transition-opacity">
+      ↑ ↑ ↓ ↓ ← → ← → B A
+    </div>
+
+    <script src="../scripts/main.js"></script>
+  </body>
+</html>

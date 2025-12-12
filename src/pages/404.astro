@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 | Event Horizon Reached">
+  <div class="min-h-screen flex flex-col justify-center items-center text-center relative z-10">
+    <h1 class="text-[10rem] font-bold text-transparent bg-clip-text bg-gradient-to-b from-purple-400 to-black leading-none select-none glitch-text" data-text="404">
+      404
+    </h1>
+    <h2 class="text-2xl md:text-4xl text-white font-serif mt-4 mb-8">
+      Horizonte de Eventos Atingido
+    </h2>
+    <p class="text-slate-400 max-w-md mx-auto mb-12 font-mono text-sm leading-relaxed">
+      A página que você procura foi consumida pela singularidade ou nunca existiu nesta dimensão.
+    </p>
+
+    <a href="/" class="px-8 py-4 bg-white/5 border border-white/10 text-white font-mono rounded hover:bg-white/10 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all group">
+      <span class="mr-2">←</span>
+      Retornar à Base
+    </a>
+  </div>
+</BaseLayout>
